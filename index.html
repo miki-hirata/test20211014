@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>モーダルReact</title>
+  <link rel="stylesheet" href="style.css">
+  <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<body>
+  <h1><img src="img/flower.svg" alt="花">モーダルのテスト<img src="img/flower.svg" alt="花"></h1>
+  <div id="root"></div>
+  <p>上のボタンをクリック！！</p>
+  <script type="text/babel">
+
+    function Modal({show, setShow, content}) {
+      const closeModal = () => {
+        setShow(false)
+      }
+      if (show) {
+        return (
+          <div id="overlay" onClick={closeModal}>
+            <div id="content" onClick={(e) => e.stopPropagation()}>
+              <p>{content}</p>
+              <button onClick={closeModal}>Close</button>
+            </div>
+          </div >
+        )
+      } else {
+        return null;
+      }
+    }
+
+    const { useState } = React　//cdnの利用の場合必須
+    function App() {
+    const [show, setShow] = useState(false)
+    const openModal = () => {
+        setShow(true)
+    }
+    return (
+        <div>
+            <button onClick={openModal}>Click</button>
+            <Modal show={show} setShow={setShow} content="モーダルの内容！！" />
+        </div>
+    )
+    }
+
+  ReactDOM.render(<App />, document.getElementById('root'))
+  </script>
+</body>
+</html>
